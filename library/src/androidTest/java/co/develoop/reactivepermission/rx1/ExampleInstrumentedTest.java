@@ -1,4 +1,4 @@
-package co.develoop.reactivepermission;
+package co.develoop.reactivepermission.rx1;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

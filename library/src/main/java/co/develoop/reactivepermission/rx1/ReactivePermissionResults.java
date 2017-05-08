@@ -1,4 +1,4 @@
-package co.develoop.reactivepermission;
+package co.develoop.reactivepermission.rx1;
 
 import java.util.HashMap;
 import java.util.Map;

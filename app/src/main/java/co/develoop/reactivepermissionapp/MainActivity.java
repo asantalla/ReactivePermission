@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import co.develoop.reactivepermission.ReactivePermission;
-import co.develoop.reactivepermission.ReactivePermissionResults;
+import co.develoop.reactivepermission.rx1.ReactivePermission;
+import co.develoop.reactivepermission.rx1.ReactivePermissionResults;
 import rx.functions.Action1;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
