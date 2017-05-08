@@ -51,6 +51,12 @@ public class ReactivePermission extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeSubscription.clear();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CODE) {
             broadcast(getPermissionsResults(permissions, grantResults));
