@@ -12,11 +12,11 @@ import android.support.v4.app.FragmentActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import rx.subjects.BehaviorSubject;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 
 public class ReactivePermission extends Fragment {
 
@@ -24,14 +24,14 @@ public class ReactivePermission extends Fragment {
     private final static int REQUEST_CODE = 9999;
 
     private BehaviorSubject<ReactivePermissionResults> behaviorSubject;
-    private CompositeSubscription compositeSubscription;
+    private CompositeDisposable compositeDisposable;
 
     private List<String> mPermissions;
     private Boolean isRequesting = false;
 
     public ReactivePermission() {
         behaviorSubject = BehaviorSubject.create();
-        compositeSubscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     public static ReactivePermission newInstance() {
@@ -51,6 +51,12 @@ public class ReactivePermission extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CODE) {
             broadcast(getPermissionsResults(permissions, grantResults));
@@ -59,20 +65,20 @@ public class ReactivePermission extends Fragment {
     }
 
     public Boolean hasSubscriptions() {
-        return compositeSubscription.hasSubscriptions();
+        return compositeDisposable.size() > 0;
     }
 
-    private void subscribe(List<String> permissions, Action1<ReactivePermissionResults> onResults) {
+    private void subscribe(List<String> permissions, Consumer<ReactivePermissionResults> onResults) {
         mPermissions = permissions;
-        compositeSubscription.clear();
-        compositeSubscription.add(behaviorSubject
+        compositeDisposable.clear();
+        compositeDisposable.add(behaviorSubject
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(onResults));
     }
 
     private void requestPermissions() {
-        if (compositeSubscription.hasSubscriptions()) {
+        if (hasSubscriptions()) {
             if (!mPermissions.isEmpty()) {
                 String[] permissions = mPermissions.toArray(new String[mPermissions.size()]);
 
@@ -121,7 +127,7 @@ public class ReactivePermission extends Fragment {
             return this;
         }
 
-        public void subscribe(Action1<ReactivePermissionResults> onResults) {
+        public void subscribe(Consumer<ReactivePermissionResults> onResults) {
             FragmentManager fragmentManager = mFragmentActivity.getFragmentManager();
             ReactivePermission reactivePermission = (ReactivePermission) fragmentManager.findFragmentByTag(FRAGMENT_TAG_NAME);
 

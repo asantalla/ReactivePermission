@@ -22,8 +22,8 @@ android {
 }
 
 def support_version = '25.3.1'
-def rxandroid_version = '1.2.1'
-def rxjava_version = '1.2.3'
+def rxandroid_version = '2.0.1'
+def rxjava_version = '2.0.9'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -38,6 +38,6 @@ dependencies {
     compile "com.android.support:support-v13:$support_version"
 
     // RxJava
-    compile "io.reactivex:rxandroid:$rxandroid_version"
-    compile "io.reactivex:rxjava:$rxjava_version"
+    compile "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    compile "io.reactivex.rxjava2:rxjava:$rxjava_version"
 }

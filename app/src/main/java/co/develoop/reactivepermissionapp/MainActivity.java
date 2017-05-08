@@ -6,7 +6,8 @@ import android.widget.Toast;
 
 import co.develoop.reactivepermission.ReactivePermission;
 import co.develoop.reactivepermission.ReactivePermissionResults;
-import rx.functions.Action1;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -21,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
         new ReactivePermission.Builder(this)
                 .setPermission(ACCESS_FINE_LOCATION)
                 .setPermission(WRITE_EXTERNAL_STORAGE)
-                .subscribe(new Action1<ReactivePermissionResults>() {
+                .subscribe(new Consumer<ReactivePermissionResults>() {
 
                     @Override
-                    public void call(ReactivePermissionResults reactivePermissionResults) {
+                    public void accept(@NonNull ReactivePermissionResults reactivePermissionResults) throws Exception {
                         if (reactivePermissionResults.hasPermission(ACCESS_FINE_LOCATION)) {
                             Toast.makeText(getApplicationContext(), "ACCESS_FINE_LOCATION GRANTED", Toast.LENGTH_LONG).show();
                         } else {
