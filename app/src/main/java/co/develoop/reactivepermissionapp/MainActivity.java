@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import co.develoop.reactivepermission.ReactivePermission;
-import co.develoop.reactivepermission.ReactivePermissionResults;
+import co.develoop.reactivepermission.rx2.ReactivePermission;
+import co.develoop.reactivepermission.rx2.ReactivePermissionResults;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 

@@ -1,4 +1,4 @@
-package co.develoop.reactivepermission;
+package co.develoop.reactivepermission.rx2;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
