@@ -18,26 +18,28 @@ Usage
 
 We can request permissions using the below code inside a **FragmentActivity**.
 
-    new ReactivePermission.Builder(this)
-        .setPermission(ACCESS_FINE_LOCATION)
-        .setPermission(WRITE_EXTERNAL_STORAGE)
-        .subscribe(new Consumer<ReactivePermissionResults>() {
+```java
+new ReactivePermission.Builder(this)
+    .setPermission(ACCESS_FINE_LOCATION)
+    .setPermission(WRITE_EXTERNAL_STORAGE)
+    .subscribe(new Consumer<ReactivePermissionResults>() {
 
-            @Override
-            public void accept(@NonNull ReactivePermissionResults reactivePermissionResults) throws Exception {
-                if (reactivePermissionResults.hasPermission(ACCESS_FINE_LOCATION)) {
-                    Toast.makeText(getApplicationContext(), "ACCESS_FINE_LOCATION GRANTED", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "ACCESS_FINE_LOCATION NOT GRANTED", Toast.LENGTH_LONG).show();
-                }
-
-                if (reactivePermissionResults.hasPermission(WRITE_EXTERNAL_STORAGE)) {
-                    Toast.makeText(getApplicationContext(), "WRITE_EXTERNAL_STORAGE GRANTED", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "WRITE_EXTERNAL_STORAGE NOT GRANTED", Toast.LENGTH_LONG).show();
-                }
+        @Override
+        public void accept(@NonNull ReactivePermissionResults reactivePermissionResults) throws Exception {
+            if (reactivePermissionResults.hasPermission(ACCESS_FINE_LOCATION)) {
+                Toast.makeText(getApplicationContext(), "ACCESS_FINE_LOCATION GRANTED", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "ACCESS_FINE_LOCATION NOT GRANTED", Toast.LENGTH_LONG).show();
             }
-        });
+
+            if (reactivePermissionResults.hasPermission(WRITE_EXTERNAL_STORAGE)) {
+                Toast.makeText(getApplicationContext(), "WRITE_EXTERNAL_STORAGE GRANTED", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "WRITE_EXTERNAL_STORAGE NOT GRANTED", Toast.LENGTH_LONG).show();
+            }
+        }
+    });
+```
 
 License
 -------
