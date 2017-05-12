@@ -15,6 +15,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 
@@ -36,6 +37,10 @@ public class ReactivePermission extends Fragment {
 
     public static ReactivePermission newInstance() {
         return new ReactivePermission();
+    }
+
+    public TestObserver<ReactivePermissionResults> test() {
+        return behaviorSubject.test();
     }
 
     @Override
@@ -64,17 +69,19 @@ public class ReactivePermission extends Fragment {
         }
     }
 
-    public Boolean hasSubscriptions() {
+    private Boolean hasSubscriptions() {
         return compositeDisposable.size() > 0;
     }
 
     private void subscribe(List<String> permissions, Consumer<ReactivePermissionResults> onResults) {
-        mPermissions = permissions;
-        compositeDisposable.clear();
-        compositeDisposable.add(behaviorSubject
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(onResults));
+        if (onResults != null) {
+            mPermissions = permissions;
+            compositeDisposable.clear();
+            compositeDisposable.add(behaviorSubject
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(onResults));
+        }
     }
 
     private void requestPermissions() {
