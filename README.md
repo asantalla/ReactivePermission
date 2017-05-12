@@ -2,10 +2,10 @@
 
 ReactivePermission is an Android library to request permissions using RxJava.
 
-| Current Branch | Branch  |
-|:--------------:|:-------:|
+| Current Branch | Branch  | Build |
+|:--------------:|:-------:|:-----:|
 | | [`RxJava1.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava1.x) |
-| :ballot_box_with_check: | [`RxJava2.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava2.x) |
+| :ballot_box_with_check: | [`RxJava2.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava2.x) | [![Build Status](https://travis-ci.org/asantalla/ReactivePermission.svg?branch=RxJava2.x)](https://travis-ci.org/asantalla/ReactivePermission) |
 
 Contents
 --------
