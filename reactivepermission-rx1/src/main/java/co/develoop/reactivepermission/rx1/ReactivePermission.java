@@ -14,6 +14,7 @@ import java.util.List;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.observers.AssertableSubscriber;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
@@ -36,6 +37,10 @@ public class ReactivePermission extends Fragment {
 
     public static ReactivePermission newInstance() {
         return new ReactivePermission();
+    }
+
+    public AssertableSubscriber<ReactivePermissionResults> test() {
+        return behaviorSubject.test();
     }
 
     @Override
