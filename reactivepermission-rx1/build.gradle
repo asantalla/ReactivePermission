@@ -1,4 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+
+def version_code = 1
+def version_name = "1.0.0"
 
 android {
     compileSdkVersion 25
@@ -7,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode version_code
+        versionName version_name
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -40,4 +44,33 @@ dependencies {
     // RxJava
     compile "io.reactivex:rxandroid:$rxandroid_version"
     compile "io.reactivex:rxjava:$rxjava_version"
+}
+
+ext {
+    bintrayRepo = 'develoop'
+    bintrayName = 'reactivepermission-rx1'
+
+    publishedGroupId = 'co.develoop.reactivepermission'
+    libraryName = 'ReactivePermission'
+    artifact = 'reactivepermission-rx1'
+
+    libraryDescription = 'Android library to request permissions using RxJava 1'
+
+    siteUrl = 'https://github.com/asantalla/ReactivePermission'
+    gitUrl = 'https://github.com/asantalla/ReactivePermission.git'
+
+    libraryVersion = version_name
+
+    developerId = 'asantalla'
+    developerName = 'Adrián Santalla'
+    developerEmail = 'adrian.santalla@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+if (project.rootProject.file('local.properties').exists()) {
+    apply from: 'install.gradle'
+    apply from: 'bintray.gradle'
 }
