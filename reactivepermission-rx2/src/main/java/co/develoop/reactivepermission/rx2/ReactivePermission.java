@@ -58,7 +58,7 @@ public class ReactivePermission extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        compositeDisposable.dispose();
+        clear();
     }
 
     @Override
@@ -69,6 +69,10 @@ public class ReactivePermission extends Fragment {
         }
     }
 
+    public void clear() {
+        compositeDisposable.clear();
+    }
+
     private Boolean hasSubscriptions() {
         return compositeDisposable.size() > 0;
     }
@@ -76,7 +80,6 @@ public class ReactivePermission extends Fragment {
     private void subscribe(List<String> permissions, Consumer<ReactivePermissionResults> onResults) {
         if (onResults != null) {
             mPermissions = permissions;
-            compositeDisposable.clear();
             compositeDisposable.add(behaviorSubject
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -117,7 +120,9 @@ public class ReactivePermission extends Fragment {
     }
 
     private void broadcast(ReactivePermissionResults reactivePermissionResults) {
-        behaviorSubject.onNext(reactivePermissionResults);
+        if (hasSubscriptions()) {
+            behaviorSubject.onNext(reactivePermissionResults);
+        }
     }
 
     public static class Builder {
@@ -143,10 +148,9 @@ public class ReactivePermission extends Fragment {
                 reactivePermission.subscribe(mPermissions, onResults);
                 fragmentManager.beginTransaction().add(reactivePermission, FRAGMENT_TAG_NAME).commit();
             } else {
-                if (!reactivePermission.hasSubscriptions()) {
-                    reactivePermission.subscribe(mPermissions, onResults);
-                    reactivePermission.requestPermissions();
-                }
+                reactivePermission.clear();
+                reactivePermission.subscribe(mPermissions, onResults);
+                reactivePermission.requestPermissions();
             }
         }
     }
