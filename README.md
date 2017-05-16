@@ -10,7 +10,7 @@ ReactivePermission is an Android library to request permissions using RxJava.
 Contents
 --------
 
-- [Download](#Download)
+- [Download](#download)
 - [Usage](#usage)
 - [License](#license)
 
