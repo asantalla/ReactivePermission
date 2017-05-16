@@ -2,16 +2,34 @@
 
 ReactivePermission is an Android library to request permissions using RxJava.
 
-| Current Branch | Branch  | Build Status |
-|:--------------:|:-------:|:-----:|
-| :ballot_box_with_check: | [`RxJava1.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava1.x) | [![Build Status](https://travis-ci.org/asantalla/ReactivePermission.svg?branch=RxJava1.x)](https://travis-ci.org/asantalla/ReactivePermission) |
-| | [`RxJava2.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava2.x) | [![Build Status](https://travis-ci.org/asantalla/ReactivePermission.svg?branch=RxJava2.x)](https://travis-ci.org/asantalla/ReactivePermission) |
+| Current Branch | Branch  | Bintray JCenter | Build Status |
+|:--------------:|:-------:|:-------:|:------------:|
+| :ballot_box_with_check: | [`RxJava1.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava1.x) | [ ![jcenter](https://api.bintray.com/packages/asantalla/develoop/reactivepermission-rx1/images/download.svg) ](https://bintray.com/asantalla/develoop/reactivepermission-rx1/_latestVersion) | [![Build Status](https://travis-ci.org/asantalla/ReactivePermission.svg?branch=RxJava1.x)](https://travis-ci.org/asantalla/ReactivePermission) |
+| | [`RxJava2.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava2.x) | [ ![jcenter](https://api.bintray.com/packages/asantalla/develoop/reactivepermission-rx2/images/download.svg) ](https://bintray.com/asantalla/develoop/reactivepermission-rx2/_latestVersion) | [![Build Status](https://travis-ci.org/asantalla/ReactivePermission.svg?branch=RxJava2.x)](https://travis-ci.org/asantalla/ReactivePermission) |
 
 Contents
 --------
 
+- [Download](#download)
 - [Usage](#usage)
 - [License](#license)
+
+Download
+--------
+
+First of all, be sure you have the **jcenter repository** included in the `build.gradle` file in the root of your project.
+
+```
+repositories {
+    jcenter()
+}
+```
+
+Next add the gradle compile dependency to the `build.gradle` file of your app module.
+
+```
+compile 'co.develoop.reactivepermission:reactivepermission-rx1:1.0.0'
+```
 
 Usage
 -----
