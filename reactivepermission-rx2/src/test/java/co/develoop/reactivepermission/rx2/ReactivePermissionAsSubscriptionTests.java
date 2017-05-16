@@ -12,6 +12,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.android.controller.ActivityController;
 
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.TestObserver;
 
 import static android.Manifest.permission.CAMERA;
@@ -35,7 +37,13 @@ public class ReactivePermissionAsSubscriptionTests {
 
         new ReactivePermission.Builder(mFragmentActivity)
                 .setPermission(WRITE_EXTERNAL_STORAGE)
-                .subscribe(null);
+                .subscribe(new Consumer<ReactivePermissionResults>() {
+
+                    @Override
+                    public void accept(@NonNull ReactivePermissionResults reactivePermissionResults) throws Exception {
+
+                    }
+                });
 
         ReactivePermission reactivePermissionFragment = spy((ReactivePermission) mFragmentActivity.getFragmentManager().findFragmentByTag(REACTIVE_PERMISSION_TAG));
 
