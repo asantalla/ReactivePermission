@@ -1,1 +1,1 @@
-include ':reactive-permission-sample', ':reactive-permission'
+include ':reactivepermission-rx2-sample', ':reactivepermission-rx2'
