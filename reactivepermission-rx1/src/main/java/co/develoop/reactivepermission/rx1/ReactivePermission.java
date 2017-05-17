@@ -58,7 +58,7 @@ public class ReactivePermission extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        compositeSubscription.clear();
+        clear();
     }
 
     @Override
@@ -69,21 +69,26 @@ public class ReactivePermission extends Fragment {
         }
     }
 
+    public void clear() {
+        compositeSubscription.clear();
+    }
+
     public Boolean hasSubscriptions() {
         return compositeSubscription.hasSubscriptions();
     }
 
     private void subscribe(List<String> permissions, Action1<ReactivePermissionResults> onResults) {
-        mPermissions = permissions;
-        compositeSubscription.clear();
-        compositeSubscription.add(behaviorSubject
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(onResults));
+        if (onResults != null) {
+            mPermissions = permissions;
+            compositeSubscription.add(behaviorSubject
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(onResults));
+        }
     }
 
     private void requestPermissions() {
-        if (compositeSubscription.hasSubscriptions()) {
+        if (hasSubscriptions()) {
             if (!mPermissions.isEmpty()) {
                 String[] permissions = mPermissions.toArray(new String[mPermissions.size()]);
 
@@ -115,7 +120,9 @@ public class ReactivePermission extends Fragment {
     }
 
     private void broadcast(ReactivePermissionResults reactivePermissionResults) {
-        behaviorSubject.onNext(reactivePermissionResults);
+        if (hasSubscriptions()) {
+            behaviorSubject.onNext(reactivePermissionResults);
+        }
     }
 
     public static class Builder {
@@ -141,10 +148,9 @@ public class ReactivePermission extends Fragment {
                 reactivePermission.subscribe(mPermissions, onResults);
                 fragmentManager.beginTransaction().add(reactivePermission, FRAGMENT_TAG_NAME).commit();
             } else {
-                if (!reactivePermission.hasSubscriptions()) {
-                    reactivePermission.subscribe(mPermissions, onResults);
-                    reactivePermission.requestPermissions();
-                }
+                reactivePermission.clear();
+                reactivePermission.subscribe(mPermissions, onResults);
+                reactivePermission.requestPermissions();
             }
         }
     }
