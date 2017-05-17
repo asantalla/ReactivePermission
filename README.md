@@ -28,7 +28,7 @@ repositories {
 Next add the gradle compile dependency to the `build.gradle` file of your app module.
 
 ```
-compile 'co.develoop.reactivepermission:reactivepermission-rx2:1.0.3'
+compile 'co.develoop.reactivepermission:reactivepermission-rx2:1.0.0'
 ```
 
 Usage
