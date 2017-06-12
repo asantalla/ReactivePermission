@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         new ReactivePermission.Builder(this)
-                .setPermission(ACCESS_FINE_LOCATION)
-                .setPermission(WRITE_EXTERNAL_STORAGE)
+                .addPermission(ACCESS_FINE_LOCATION)
+                .addPermission(WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<ReactivePermissionResults>() {
 
                     @Override

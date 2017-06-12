@@ -4,10 +4,12 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ public class ReactivePermission extends Fragment {
     private BehaviorSubject<ReactivePermissionResults> behaviorSubject;
     private CompositeDisposable compositeDisposable;
 
-    private List<String> mPermissions;
+    private List<ReactivePermissionRequest> mPermissions;
     private Boolean isRequesting = false;
 
     public ReactivePermission() {
@@ -77,7 +79,7 @@ public class ReactivePermission extends Fragment {
         return compositeDisposable.size() > 0;
     }
 
-    private void subscribe(List<String> permissions, Consumer<ReactivePermissionResults> onResults) {
+    private void subscribe(List<ReactivePermissionRequest> permissions, Consumer<ReactivePermissionResults> onResults) {
         if (onResults != null) {
             mPermissions = permissions;
             compositeDisposable.add(behaviorSubject
@@ -90,11 +92,15 @@ public class ReactivePermission extends Fragment {
     private void requestPermissions() {
         if (hasSubscriptions()) {
             if (!mPermissions.isEmpty()) {
-                String[] permissions = mPermissions.toArray(new String[mPermissions.size()]);
+                String[] permissions = new String[mPermissions.size()];
 
-                if (android.os.Build.VERSION.SDK_INT >= 23 && permissions.length > 0) {
+                for (int i = 0; i < mPermissions.size(); i++) {
+                    permissions[i] = mPermissions.get(i).getPermission();
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissions.length > 0) {
                     if (!isRequesting) {
-                        FragmentCompat.requestPermissions(this, mPermissions.toArray(new String[mPermissions.size()]), REQUEST_CODE);
+                        FragmentCompat.requestPermissions(this, permissions, REQUEST_CODE);
                         isRequesting = true;
                     }
                 } else {
@@ -127,30 +133,52 @@ public class ReactivePermission extends Fragment {
 
     public static class Builder {
         private FragmentActivity mFragmentActivity;
-        private List<String> mPermissions;
+        private List<ReactivePermissionRequest> mPermissions;
+        private Boolean isAllGranted = true;
 
         public Builder(FragmentActivity fragmentActivity) {
             mFragmentActivity = fragmentActivity;
             mPermissions = new ArrayList<>();
         }
 
-        public Builder setPermission(String permission) {
-            mPermissions.add(permission);
+        public Builder addPermission(String permission) {
+            ReactivePermissionRequest reactivePermissionRequest = new ReactivePermissionRequest(permission, ContextCompat.checkSelfPermission(mFragmentActivity, permission));
+
+            if (!reactivePermissionRequest.isGranted()) {
+                isAllGranted = false;
+            }
+
+            mPermissions.add(reactivePermissionRequest);
+
             return this;
         }
 
         public void subscribe(Consumer<ReactivePermissionResults> onResults) {
-            FragmentManager fragmentManager = mFragmentActivity.getFragmentManager();
-            ReactivePermission reactivePermission = (ReactivePermission) fragmentManager.findFragmentByTag(FRAGMENT_TAG_NAME);
+            if (!isAllGranted) {
+                FragmentManager fragmentManager = mFragmentActivity.getFragmentManager();
+                ReactivePermission reactivePermission = (ReactivePermission) fragmentManager.findFragmentByTag(FRAGMENT_TAG_NAME);
 
-            if (reactivePermission == null) {
-                reactivePermission = ReactivePermission.newInstance();
-                reactivePermission.subscribe(mPermissions, onResults);
-                fragmentManager.beginTransaction().add(reactivePermission, FRAGMENT_TAG_NAME).commit();
+                if (reactivePermission == null) {
+                    reactivePermission = ReactivePermission.newInstance();
+                    reactivePermission.subscribe(mPermissions, onResults);
+                    fragmentManager.beginTransaction().add(reactivePermission, FRAGMENT_TAG_NAME).commit();
+                } else {
+                    reactivePermission.clear();
+                    reactivePermission.subscribe(mPermissions, onResults);
+                    reactivePermission.requestPermissions();
+                }
             } else {
-                reactivePermission.clear();
-                reactivePermission.subscribe(mPermissions, onResults);
-                reactivePermission.requestPermissions();
+                ReactivePermissionResults reactivePermissionResults = new ReactivePermissionResults();
+
+                for (ReactivePermissionRequest reactivePermissionRequest : mPermissions) {
+                    reactivePermissionResults.add(reactivePermissionRequest.getPermission(), reactivePermissionRequest.isGranted());
+                }
+
+                try {
+                    onResults.accept(reactivePermissionResults);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }

@@ -31,17 +31,17 @@ public class ReactivePermissionAsSubscriptionTests {
     private TestObserver<ReactivePermissionResults> mTestObserver;
 
     @Before
-    public void setup() {
+    public void setUp() {
         ActivityController<FragmentActivity> activityController = Robolectric.buildActivity(FragmentActivity.class);
         mFragmentActivity = spy(activityController.setup().get());
 
         new ReactivePermission.Builder(mFragmentActivity)
-                .setPermission(WRITE_EXTERNAL_STORAGE)
+                .addPermission(WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<ReactivePermissionResults>() {
 
                     @Override
                     public void accept(@NonNull ReactivePermissionResults reactivePermissionResults) throws Exception {
-
+                        // Nothing to do here
                     }
                 });
 
