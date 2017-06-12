@@ -28,7 +28,7 @@ repositories {
 Next add the gradle compile dependency to the `build.gradle` file of your app module.
 
 ```
-compile 'co.develoop.reactivepermission:reactivepermission-rx2:1.0.0'
+compile 'co.develoop.reactivepermission:reactivepermission-rx2:1.0.1'
 ```
 
 Usage
@@ -38,8 +38,8 @@ We can request permissions using the below code inside a **FragmentActivity**.
 
 ```java
 new ReactivePermission.Builder(this)
-    .setPermission(ACCESS_FINE_LOCATION)
-    .setPermission(WRITE_EXTERNAL_STORAGE)
+    .addPermission(ACCESS_FINE_LOCATION)
+    .addPermission(WRITE_EXTERNAL_STORAGE)
     .subscribe(new Consumer<ReactivePermissionResults>() {
 
         @Override
