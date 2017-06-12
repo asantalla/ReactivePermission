@@ -7,7 +7,7 @@ public class ReactivePermissionResults {
 
     private Map<String, Boolean> results;
 
-    public ReactivePermissionResults() {
+    ReactivePermissionResults() {
         results = new HashMap<>();
     }
 

@@ -2,10 +2,10 @@
 
 ReactivePermission is an Android library to request permissions using RxJava.
 
-| Current Branch | Branch  | Bintray JCenter | Build Status |
-|:--------------:|:-------:|:-------:|:------------:|
-| | [`RxJava1.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava1.x) | [ ![jcenter](https://api.bintray.com/packages/asantalla/develoop/reactivepermission-rx1/images/download.svg) ](https://bintray.com/asantalla/develoop/reactivepermission-rx1/_latestVersion) | [![Build Status](https://travis-ci.org/asantalla/ReactivePermission.svg?branch=RxJava1.x)](https://travis-ci.org/asantalla/ReactivePermission) |
-| :ballot_box_with_check: | [`RxJava2.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava2.x) | [ ![jcenter](https://api.bintray.com/packages/asantalla/develoop/reactivepermission-rx2/images/download.svg) ](https://bintray.com/asantalla/develoop/reactivepermission-rx2/_latestVersion) | [![Build Status](https://travis-ci.org/asantalla/ReactivePermission.svg?branch=RxJava2.x)](https://travis-ci.org/asantalla/ReactivePermission) |
+| Current Branch | Branch  | Bintray JCenter | Build Status | Codacy |
+|:--------------:|:-------:|:---------------:|:------------:|:------:|
+| | [`RxJava1.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava1.x) | [ ![jcenter](https://api.bintray.com/packages/asantalla/develoop/reactivepermission-rx1/images/download.svg) ](https://bintray.com/asantalla/develoop/reactivepermission-rx1/_latestVersion) | [![Build Status](https://travis-ci.org/asantalla/ReactivePermission.svg?branch=RxJava1.x)](https://travis-ci.org/asantalla/ReactivePermission) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/92fe8cea57c8452a8e4165d8dc19e835)](https://www.codacy.com/app/adrian.santalla/ReactivePermission?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=asantalla/ReactivePermission&amp;utm_campaign=Badge_Grade) |
+| :ballot_box_with_check: | [`RxJava2.x`](https://github.com/asantalla/ReactivePermission/tree/RxJava2.x) | [ ![jcenter](https://api.bintray.com/packages/asantalla/develoop/reactivepermission-rx2/images/download.svg) ](https://bintray.com/asantalla/develoop/reactivepermission-rx2/_latestVersion) | [![Build Status](https://travis-ci.org/asantalla/ReactivePermission.svg?branch=RxJava2.x)](https://travis-ci.org/asantalla/ReactivePermission) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/92fe8cea57c8452a8e4165d8dc19e835)](https://www.codacy.com/app/adrian.santalla/ReactivePermission?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=asantalla/ReactivePermission&amp;utm_campaign=Badge_Grade) |
 
 Contents
 --------
