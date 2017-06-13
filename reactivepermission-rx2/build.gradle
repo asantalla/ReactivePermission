@@ -38,7 +38,6 @@ dependencies {
     testCompile "org.robolectric:robolectric:3.3.2"
 
     // Android
-    compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:support-v13:$support_version"
 
     // RxJava

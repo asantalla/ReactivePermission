@@ -11,7 +11,7 @@ public class ReactivePermissionResults {
         results = new HashMap<>();
     }
 
-    protected void add(String permission, Boolean result) {
+    void add(String permission, Boolean result) {
         results.put(permission, result);
     }
 
